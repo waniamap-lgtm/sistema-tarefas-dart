@@ -54,6 +54,54 @@ void main() {
   print('\n--- TAREFAS FILTRADAS ---');
   print('Total de Tarefas Concluídas: ${concluidas.length}');
   print('Total de Tarefas Pendentes: ${pendentes.length}');
+
+  // --- RF08: Somar valores das tarefas concluídas ---
+  double somaConcluidas = 0.0;
+  for (var tarefa in concluidas) {
+    somaConcluidas = somaConcluidas + tarefa.valor;
+  }
+
+  // --- RF09: Calcular a média de valor das tarefas pendentes ---
+  double somaPendentes = 0.0;
+  for (var tarefa in pendentes) {
+    somaPendentes = somaPendentes + tarefa.valor;
+  }
+
+  // Para evitar erro matemático (dividir por zero), checamos se a lista não está vazia
+  double mediaPendentes = 0.0;
+  if (pendentes.isNotEmpty) {
+    mediaPendentes = somaPendentes / pendentes.length;
+  }
+
+  // --- Exibindo os cálculos no relatório ---
+  print('\n--- CÁLCULOS FINANCEIROS ---');
+  // O '.toStringAsFixed(2)' garante que o número mostre apenas 2 casas decimais (ex: 150.50)
+  print(
+      'Soma das Tarefas Concluídas: R\$ ${somaConcluidas.toStringAsFixed(2)}');
+  print(
+      'Média das Tarefas Pendentes: R\$ ${mediaPendentes.toStringAsFixed(2)}');
+
+  // --- RF10: Total de horas por status ---
+  int horasConcluidas = 0;
+  for (var tarefa in concluidas) {
+    // Adicionamos o 'as int' para garantir ao Dart que o valor é um número inteiro
+    horasConcluidas += (tarefa.horas as int);
+  }
+  print('Total de Horas em Tarefas Concluídas: $horasConcluidas horas');
+
+  // --- RF11: Identificar tarefas com dados incompletos ---
+  // Vamos buscar tarefas que tenham o título 'Sem título' ou valor 0.0
+  print('\n--- TAREFAS COM DADOS INCOMPLETOS ---');
+  List<Tarefa> incompletas = listaDeTarefas
+      .where((t) => t.titulo == 'Sem título' || t.valor == 0.0)
+      .toList();
+
+  for (var t in incompletas) {
+    print('ID: ${t.id} - Revisar: ${t.titulo} (Valor: R\$ ${t.valor})');
+  }
+  // --- RF (Extra): Status Únicos com Set ---
+  var statusUnicos = listaDeTarefas.map((t) => t.status).toSet();
+  print('\nStatus encontrados no sistema: $statusUnicos');
 }
 
 // --- 2. BASE DE DADOS SIMULADA ---
