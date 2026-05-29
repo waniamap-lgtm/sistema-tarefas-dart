@@ -37,11 +37,23 @@ void main() {
   }
 
   // Testes para validar se a matemática funcionou
-  print("Convertemos ${listaDeTarefas.length} tarefas com sucesso!");
-  print(
-      "O valor da primeira tarefa era texto, agora é o número: ${listaDeTarefas[0].valor}");
-  print(
-      "A quantidade de horas da segunda tarefa agora é o número: ${listaDeTarefas[1].horas}");
+  // --- RF06: Exibir todas as tarefas convertidas ---
+  print('\n--- TODAS AS TAREFAS CONVERTIDAS ---');
+  for (var tarefa in listaDeTarefas) {
+    print(
+        'ID: ${tarefa.id} | Título: ${tarefa.titulo} | Status: ${tarefa.status} | Valor: R\$ ${tarefa.valor}');
+  }
+
+  // --- RF07: Filtrar tarefas por status ---
+  // O '.where()' age como uma peneira. Ele filtra e guarda apenas o que atende à condição.
+  List<Tarefa> concluidas =
+      listaDeTarefas.where((tarefa) => tarefa.status == 'concluida').toList();
+  List<Tarefa> pendentes =
+      listaDeTarefas.where((tarefa) => tarefa.status == 'pendente').toList();
+
+  print('\n--- TAREFAS FILTRADAS ---');
+  print('Total de Tarefas Concluídas: ${concluidas.length}');
+  print('Total de Tarefas Pendentes: ${pendentes.length}');
 }
 
 // --- 2. BASE DE DADOS SIMULADA ---
