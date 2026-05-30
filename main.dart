@@ -13,7 +13,16 @@ void main() {
         .toString()
         .trim()
         .toLowerCase()
-        .replaceAll('á', 'a');
+        .replaceAll('á', 'a')
+        .replaceAll('à', 'a')
+        .replaceAll('ã', 'a')
+        .replaceAll('é', 'e')
+        .replaceAll('ê', 'e')
+        .replaceAll('í', 'i')
+        .replaceAll('ó', 'o')
+        .replaceAll('ô', 'o')
+        .replaceAll('ú', 'u')
+        .replaceAll('ç', 'c');
 
     // RF04: Converter valor monetário (Tira 'R$ ', troca ',' por '.' e vira double)
     String valorTexto = (mapa['valor'] ?? '0')
@@ -73,22 +82,21 @@ void main() {
   // --- RF09: Calcular a média de valor das tarefas pendentes ---
   double somaPendentes = 0.0;
   for (var tarefa in pendentes) {
-    somaPendentes = somaPendentes + tarefa.valor;
+    somaPendentes += tarefa.valor;
   }
 
-  // Para evitar erro matemático (dividir por zero), checamos se a lista não está vazia
-  double mediaPendentes = 0.0;
-  if (pendentes.isNotEmpty) {
-    mediaPendentes = somaPendentes / pendentes.length;
-  }
-
-  // --- Exibindo os cálculos no relatório ---
   print('\n--- CÁLCULOS FINANCEIROS ---');
-  // O '.toStringAsFixed(2)' garante que o número mostre apenas 2 casas decimais (ex: 150.50)
-  print(
-      'Soma das Tarefas Concluídas: R\$ ${somaConcluidas.toStringAsFixed(2)}');
-  print(
-      'Média das Tarefas Pendentes: R\$ ${mediaPendentes.toStringAsFixed(2)}');
+  // ... (o print da soma das concluídas que você já tem)
+
+  // Tratamento de erro conforme requisito:
+  if (pendentes.isEmpty) {
+    print(
+        'Média de valor das tarefas pendentes: Não existem tarefas pendentes para calcular média.');
+  } else {
+    double mediaPendentes = somaPendentes / pendentes.length;
+    print(
+        'Média de valor das tarefas pendentes: R\$ ${mediaPendentes.toStringAsFixed(2)}');
+  }
 
   // --- RF10: Total de horas por status ---
   int horasConcluidas = 0;
