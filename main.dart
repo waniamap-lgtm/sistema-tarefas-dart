@@ -99,13 +99,24 @@ void main() {
   }
 
   // --- RF10: Total de horas por status ---
-  int horasConcluidas = 0;
-  for (var tarefa in concluidas) {
-    // Adicionamos o 'as int' para garantir ao Dart que o valor é um número inteiro
-    horasConcluidas += (tarefa.horas as int);
-  }
-  print('Total de Horas em Tarefas Concluídas: $horasConcluidas horas');
+  Map<String, int> horasPorStatus = {
+    'concluida': 0,
+    'em andamento': 0,
+    'pendente': 0,
+    'cancelada': 0,
+  };
 
+  for (var tarefa in listaDeTarefas) {
+    if (horasPorStatus.containsKey(tarefa.status)) {
+      horasPorStatus[tarefa.status] =
+          (horasPorStatus[tarefa.status] ?? 0) + (tarefa.horas as int);
+    }
+  }
+
+  print('\n--- HORAS POR STATUS ---');
+  horasPorStatus.forEach((status, total) {
+    print('$status: $total horas');
+  });
   // --- RF11: Identificar tarefas com dados incompletos ---
   // Vamos buscar tarefas que tenham o título 'Sem título' ou valor 0.0
   print('\n--- TAREFAS COM DADOS INCOMPLETOS ---');
