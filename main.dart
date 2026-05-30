@@ -118,18 +118,22 @@ void main() {
     print('$status: $total horas');
   });
   // --- RF11: Identificar tarefas com dados incompletos ---
-  // Vamos buscar tarefas que tenham o título 'Sem título' ou valor 0.0
   print('\n--- TAREFAS COM DADOS INCOMPLETOS ---');
-  List<Tarefa> incompletas = listaDeTarefas
-      .where((t) => t.titulo == 'Sem título' || t.valor == 0.0)
-      .toList();
+  for (var tarefa in listaDeTarefas) {
+    List<String> erros = [];
 
-  for (var t in incompletas) {
-    print('ID: ${t.id} - Revisar: ${t.titulo} (Valor: R\$ ${t.valor})');
+    // Verificamos cada campo individualmente para dar um feedback preciso
+    if (tarefa.titulo == 'Sem título') erros.add('título ausente');
+    if (tarefa.responsavel == 'Não informado') erros.add('responsável ausente');
+    if (tarefa.horas == 0) erros.add('horas ausentes');
+    if (tarefa.valor == 0.0) erros.add('valor inválido');
+    if (tarefa.status == 'sem status') erros.add('status ausente');
+
+    // Se a lista de erros não estiver vazia, exibimos o problema
+    if (erros.isNotEmpty) {
+      print('- ID ${tarefa.id}: ${erros.join(" ou ")}');
+    }
   }
-  // --- RF (Extra): Status Únicos com Set ---
-  var statusUnicos = listaDeTarefas.map((t) => t.status).toSet();
-  print('\nStatus encontrados no sistema: $statusUnicos');
 }
 
 // --- 2. BASE DE DADOS SIMULADA ---
