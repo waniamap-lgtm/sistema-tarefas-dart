@@ -11,9 +11,9 @@ void main() {
     dynamic responsavelLimpo = mapa['responsavel'] ?? 'Sem responsável';
     dynamic statusLimpo = (mapa['status'] ?? 'pendente')
         .toString()
+        .trim()
         .toLowerCase()
-        .replaceAll('á', 'a')
-        .trim();
+        .replaceAll('á', 'a');
 
     // RF04: Converter valor monetário (Tira 'R$ ', troca ',' por '.' e vira double)
     String valorTexto = (mapa['valor'] ?? '0')
