@@ -9,8 +9,11 @@ void main() {
     // Limpeza de textos
     dynamic tituloLimpo = mapa['titulo'] ?? 'Sem título';
     dynamic responsavelLimpo = mapa['responsavel'] ?? 'Sem responsável';
-    dynamic statusLimpo =
-        (mapa['status'] ?? 'pendente').toString().trim().toLowerCase();
+    dynamic statusLimpo = (mapa['status'] ?? 'pendente')
+        .toString()
+        .toLowerCase()
+        .replaceAll('á', 'a')
+        .trim();
 
     // RF04: Converter valor monetário (Tira 'R$ ', troca ',' por '.' e vira double)
     String valorTexto = (mapa['valor'] ?? '0')
@@ -40,8 +43,14 @@ void main() {
   // --- RF06: Exibir todas as tarefas convertidas ---
   print('\n--- TODAS AS TAREFAS CONVERTIDAS ---');
   for (var tarefa in listaDeTarefas) {
-    print(
-        'ID: ${tarefa.id} | Título: ${tarefa.titulo} | Status: ${tarefa.status} | Valor: R\$ ${tarefa.valor}');
+    print('ID: ${tarefa.id}');
+    print('Título: ${tarefa.titulo}');
+    print('Responsável: ${tarefa.responsavel}');
+    print('Status: ${tarefa.status}');
+    print('Prioridade: ${tarefa.prioridade}');
+    print('Valor: R\$ ${tarefa.valor}');
+    print('Horas: ${tarefa.horas}');
+    print('--------------------------'); // Linha para separar as tarefas
   }
 
   // --- RF07: Filtrar tarefas por status ---
